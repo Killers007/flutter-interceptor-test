@@ -7,6 +7,7 @@ import 'package:desktop_app/utils/preferences.dart';
 import 'package:dio/dio.dart';
 import 'exception.dart';
 import 'interceptor.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 enum MethodRequest { GET, POST, PUT, DELETE }
 
@@ -65,6 +66,13 @@ class Consumer {
       Dio dio = Dio(options);
 
       dio.interceptors.add(CustomInterceptors(dio));
+      dio.interceptors.add(PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: false,
+        compact: false,
+      ));
 
       _cleanFillter();
       Response<Map<String, dynamic>> res =

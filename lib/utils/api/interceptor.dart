@@ -45,21 +45,6 @@ class CustomInterceptors extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    if (true) {
-      print('\n');
-      print(
-          "┌${UtilLogger.color(" [ Begin Response ] ", ColorsHeader.GREEN)} ────────────────────────────────────────────────────────────────────────");
-      print(
-          "| Status Code : ${UtilLogger.color(response.statusCode.toString(), ColorsHeader.GREEN)}");
-      print(
-          "| URL : ${UtilLogger.color(response.realUri.toString(), ColorsHeader.GREEN)}");
-      // _printHeader(response);
-      print(
-          "|${UtilLogger.color("Response Message", ColorsHeader.YELLOW)} : \n ${UtilLogger.convert(response.data)}");
-      print(
-          "└——————————————————————————————————————————————————————————————————————————${UtilLogger.color(" End Response >>> ", ColorsHeader.GREEN)}\n\n");
-    }
-
     int statusCode = response.data['code'];
 
     if (statusCode == 401) {
