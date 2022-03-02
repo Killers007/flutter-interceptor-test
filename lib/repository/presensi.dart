@@ -10,7 +10,7 @@ import '../model/model_api.dart';
 
 class PresensiRepository {
   static ApiConsumer consumer = ApiConsumer(
-      apiUrl: kDebugMode
+      apiUrl: !kDebugMode
           ? 'http://api-siapps.gov.id/api'
           : 'https://git.ulm.ac.id/api-siapps/public/api',
       appId: 'PresensiULM',
