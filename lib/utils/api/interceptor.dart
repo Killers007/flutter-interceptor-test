@@ -11,8 +11,8 @@ class CustomInterceptors extends Interceptor {
 
   void _refreshMethod(
       Response response, ResponseInterceptorHandler handler) async {
-    dio.interceptors.requestLock.lock();
-    dio.interceptors.responseLock.lock();
+    // dio.interceptors.requestLock.lock();
+    // dio.interceptors.responseLock.lock();
 
     var token = await Consumer().refreshToken();
     String newAccessToken = token;
@@ -22,6 +22,7 @@ class CustomInterceptors extends Interceptor {
       return super.onResponse(response, handler);
     }
 
+    // Set new access token
     UtilPreferences.setToken(
       accessToken: newAccessToken,
     );
@@ -30,8 +31,8 @@ class CustomInterceptors extends Interceptor {
 
     options.headers.addAll({'X-Token': newAccessToken});
 
-    dio.interceptors.requestLock.unlock();
-    dio.interceptors.responseLock.unlock();
+    // dio.interceptors.requestLock.unlock();
+    // dio.interceptors.responseLock.unlock();
 
     UtilLogger.log('DIO OPTIONS', options.headers);
     return super.onRequest(options, RequestInterceptorHandler());
