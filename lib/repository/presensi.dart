@@ -15,7 +15,7 @@ class PresensiRepository {
           : 'https://git.ulm.ac.id/api-siapps/public/api',
       appId: 'PresensiULM',
       apiKey: '605dafe39ee0780e8cf2c829434eea99',
-      apiToken: UtilPreferences.getString(Preferences.accessToken),
+      // apiToken: UtilPreferences.getString(Preferences.accessToken),
       apiTimeout: 20);
 
   Future<ApiModel> getEvent() async {

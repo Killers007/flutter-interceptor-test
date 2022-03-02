@@ -1,8 +1,10 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:desktop_app/model/model_api.dart';
+import 'package:desktop_app/utils/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_log/dio_log.dart';
+import '../../config/config.dart';
 import 'exception.dart';
 import 'interceptor.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -68,7 +70,8 @@ class ApiConsumer {
         headers: {
           'AppId': appId,
           'X-ApiKey': apiKey,
-          'X-Token': apiToken,
+          // TODO: FIX
+          'X-Token': UtilPreferences.getString(Preferences.accessToken),
         },
         baseUrl: apiUrl!,
         method: _convertMethod(method),
