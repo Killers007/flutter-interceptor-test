@@ -5,6 +5,7 @@ import 'config/application.dart';
 import 'screen/event.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   Application.preferences = await SharedPreferences.getInstance();
 
   runApp(const Event());

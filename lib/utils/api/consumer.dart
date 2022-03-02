@@ -5,6 +5,7 @@ import 'package:desktop_app/config/environment.dart';
 import 'package:desktop_app/config/preferences.dart';
 import 'package:desktop_app/utils/preferences.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_log/dio_log.dart';
 import 'exception.dart';
 import 'interceptor.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -71,8 +72,9 @@ class Consumer {
         requestBody: true,
         responseBody: true,
         responseHeader: false,
-        compact: false,
+        compact: true,
       ));
+      dio.interceptors.add(DioLogInterceptor());
 
       _cleanFillter();
       Response<Map<String, dynamic>> res =

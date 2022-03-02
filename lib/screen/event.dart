@@ -9,6 +9,7 @@ import 'package:desktop_app/utils/logger.dart';
 import 'package:desktop_app/utils/preferences.dart';
 import 'package:desktop_app/widget/app_event_card.dart';
 import 'package:desktop_app/widget/app_skeleton.dart';
+import 'package:dio_log/dio_log.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -61,7 +62,7 @@ class _EventScreenState extends State<EventScreen> {
 
   // Get Data Event Form Api
   void initData() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
 
     // Get Event form repository
     final data = await PresensiRepository().getEvent();
@@ -84,6 +85,8 @@ class _EventScreenState extends State<EventScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // showDebugBtn(context, btnColor: Colors.blue);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -92,12 +95,19 @@ class _EventScreenState extends State<EventScreen> {
     );
   }
 
-  final ScrollController _scrollController = ScrollController();
   // Content Render Widget
   Widget wContent() {
     if (eventData == null) {
-      return ListView(
-        children: [1, 2, 3, 4].map((e) => wLoading()).toList(),
+      return ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(
+          dragDevices: {
+            PointerDeviceKind.touch,
+            PointerDeviceKind.mouse,
+          },
+        ),
+        child: ListView(
+          children: List.generate(10, (index) => wLoading()).toList(),
+        ),
       );
     }
 
@@ -110,7 +120,6 @@ class _EventScreenState extends State<EventScreen> {
       ),
       child: ListView(
         physics: const AlwaysScrollableScrollPhysics(),
-        controller: _scrollController,
         children: eventData!.rows!.map((e) => AppEvent(e)).toList(),
       ),
     );
