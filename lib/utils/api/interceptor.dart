@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
-import 'package:desktop_app/utils/api/consumer.dart';
+import 'package:desktop_app/repository/presensi.dart';
+import 'package:desktop_app/utils/api/api_consumer.dart';
 import 'package:desktop_app/utils/preferences.dart';
 import 'package:dio/dio.dart';
 
@@ -10,7 +11,7 @@ class CustomInterceptors extends Interceptor {
 
   Future _refreshMethod(
       Response response, ResponseInterceptorHandler handler) async {
-    var token = await Consumer().refreshToken();
+    var token = await PresensiRepository().refreshToken();
     String newAccessToken = token;
 
     // Break jika refresh token expired

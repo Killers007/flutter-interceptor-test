@@ -1,9 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:desktop_app/model/model_api.dart';
-import 'package:desktop_app/config/environment.dart';
-import 'package:desktop_app/config/preferences.dart';
-import 'package:desktop_app/utils/preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_log/dio_log.dart';
 import 'exception.dart';
@@ -12,9 +9,9 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 enum MethodRequest { GET, POST, PUT, DELETE }
 
-class Consumer {
+class ApiConsumer {
   ///Singleton factory
-  static final Consumer _instance = Consumer._internal();
+  static final ApiConsumer _instance = ApiConsumer._internal();
 
   /*
     * Ini adalah method static yang mengontrol akses ke singleton
@@ -24,13 +21,30 @@ class Consumer {
     *
     * Implementasi ini memungkinkan Anda membuat subclass kelas Singleton sambil mempertahankan
     * hanya satu instance dari setiap subclass sekitar.
-    * @return Consumer
+    * @return ApiConsumer
     */
-  factory Consumer() {
+
+  String? apiUrl;
+  String? apiKey;
+  String? appId;
+  String? apiToken;
+  int? apiTimeout;
+
+  ApiConsumer._internal();
+
+  factory ApiConsumer(
+      {required String apiUrl,
+      String? apiKey,
+      String? appId,
+      int? apiTimeout,
+      String? apiToken}) {
+    _instance.apiUrl = apiUrl;
+    _instance.apiKey = apiKey;
+    _instance.appId = appId;
+    _instance.apiToken = apiToken;
+    _instance.apiTimeout = apiTimeout;
     return _instance;
   }
-
-  Consumer._internal();
 
   final int timeout = 20; //Seconds
 
@@ -52,11 +66,11 @@ class Consumer {
       // Application.preferences = await SharedPreferences.getInstance();
       BaseOptions options = BaseOptions(
         headers: {
-          'AppId': Environment.apiId,
-          'X-ApiKey': Environment.apiKey,
-          'X-Token': UtilPreferences.getString(Preferences.accessToken),
+          'AppId': appId,
+          'X-ApiKey': apiKey,
+          'X-Token': apiToken,
         },
-        baseUrl: Environment.apiUrl,
+        baseUrl: apiUrl!,
         method: _convertMethod(method),
         connectTimeout: timeout * 1000,
         receiveTimeout: timeout * 1000,
@@ -119,25 +133,6 @@ class Consumer {
 
     return await execute(
         url: '/auth/refresh', formData: formData, method: MethodRequest.PUT);
-  }
-
-  /*
-   * Refresh token jika acces token expired
-   */
-  Future refreshToken() async {
-    _cleanFillter();
-    FormData formData = FormData.fromMap({
-      "tokenRefresh": UtilPreferences.getString(Preferences.refreshToken),
-    });
-
-    final response = await execute(
-        url: '/auth/refresh', formData: formData, method: MethodRequest.PUT);
-
-    if (response.code == CODE.SUCCESS) {
-      return response.data['accessToken'];
-    } else {
-      return null;
-    }
   }
 
   _cleanFillter() {

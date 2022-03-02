@@ -1,6 +1,6 @@
-import 'package:desktop_app/api/repository.dart';
 import 'package:desktop_app/model/model_api.dart';
 import 'package:desktop_app/model/model_event.dart';
+import 'package:desktop_app/repository/presensi.dart';
 import 'package:flutter/foundation.dart';
 
 class EventState with ChangeNotifier, DiagnosticableTreeMixin {

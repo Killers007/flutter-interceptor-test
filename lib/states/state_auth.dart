@@ -1,6 +1,7 @@
 import 'package:desktop_app/config/preferences.dart';
 import 'package:desktop_app/model/model_api.dart';
-import 'package:desktop_app/utils/api/consumer.dart';
+import 'package:desktop_app/repository/presensi.dart';
+import 'package:desktop_app/utils/api/api_consumer.dart';
 import 'package:desktop_app/utils/logger.dart';
 import 'package:desktop_app/utils/preferences.dart';
 import 'package:flutter/foundation.dart';
@@ -37,8 +38,7 @@ class AuthState with ChangeNotifier {
   }
 
   auth() async {
-    final auth =
-        await Consumer().auth(username: '130239244', password: '1q2w3e4r');
+    final auth = await PresensiRepository().auth();
 
     if (auth.code == CODE.SUCCESS) {
       UtilPreferences.setToken(
