@@ -250,13 +250,10 @@ class Consumer {
     switch (method) {
       case MethodRequest.POST:
         return 'POST';
-        break;
       case MethodRequest.PUT:
         return 'PUT';
-        break;
       case MethodRequest.DELETE:
         return 'DELETE';
-        break;
       default:
         return 'GET';
     }

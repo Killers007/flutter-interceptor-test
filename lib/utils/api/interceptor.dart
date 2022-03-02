@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'package:desktop_app/utils/api/consumer.dart';
-import 'package:desktop_app/utils/logger.dart';
 import 'package:desktop_app/utils/preferences.dart';
 import 'package:dio/dio.dart';
 

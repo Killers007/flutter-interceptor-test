@@ -1,12 +1,6 @@
-// To parse this JSON data, do
-//
-//     final eventModel = eventModelFromMap(jsonString);
-
 // ignore_for_file: unnecessary_null_in_if_null_operators
 
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 
 class EventListModel {
   EventListModel({

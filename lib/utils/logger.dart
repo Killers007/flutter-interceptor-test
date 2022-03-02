@@ -33,26 +33,22 @@ class UtilLogger {
   }
 
   static String convert(var data) {
-    return JsonEncoder.withIndent('\t').convert(data);
+    return const JsonEncoder.withIndent('\t').convert(data);
   }
 
   static String color(String text, ColorsHeader colors) {
     switch (colors) {
       case ColorsHeader.RED:
         return ("\x1b[31m $text \x1b[0m");
-        break;
 
       case ColorsHeader.PURPLE:
         return ("\x1b[35m $text \x1b[0m");
-        break;
 
       case ColorsHeader.GREEN:
         return ("\x1b[32m $text \x1b[0m");
-        break;
 
       case ColorsHeader.YELLOW:
         return ("\x1b[33m $text \x1b[0m");
-        break;
 
       default:
         return (text);
